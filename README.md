@@ -1,6 +1,4 @@
 
-
-```markdown
 # Hybrid PDF Search Engine (BM25 + Semantic RAG)
 
 A production-style **Hybrid Search system** that combines:
