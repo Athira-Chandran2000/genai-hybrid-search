@@ -1,8 +1,7 @@
-langchain-community
-pypdf
-rank-bm25
-chromadb
-sentence-transformers
-transformers
-torch
-streamlit
+streamlit==1.32.2
+langchain==0.1.16
+langchain-community==0.0.36
+chromadb==0.4.24
+sentence-transformers==2.2.2
+pypdf==3.17.4
+huggingface-hub==0.20.3
