@@ -1,30 +1,40 @@
-from transformers import pipeline
-
+from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
+import torch
 
 class HybridRAG:
-    def __init__(self, hybrid_retriever):
-        self.retriever = hybrid_retriever
-        self.llm = pipeline(
-            "text2text-generation",
-            model="google/flan-t5-small",
-            max_new_tokens=200
+    def __init__(self, retriever):
+        self.retriever = retriever
+
+        self.tokenizer = AutoTokenizer.from_pretrained(
+            "google/flan-t5-small"
+        )
+        self.model = AutoModelForSeq2SeqLM.from_pretrained(
+            "google/flan-t5-small"
         )
 
-    def answer(self, query: str, top_k: int = 3) -> str:
-        docs = self.retriever.search(query, top_k=top_k)
-        context = "\n\n".join(doc.page_content for doc in docs)
+    def answer(self, query):
+        docs = self.retriever.search(query, top_k=5)
+        context = "\n".join(docs)
 
         prompt = f"""
-        Answer the question using ONLY the context below.
+Answer the question using the context below.
 
-        Context:
-        {context}
+Context:
+{context}
 
-        Question:
-        {query}
+Question:
+{query}
+"""
 
-        Answer:
-        """
+        inputs = self.tokenizer(
+            prompt, return_tensors="pt", truncation=True
+        )
 
-        response = self.llm(prompt)[0]["generated_text"]
-        return response.strip()
+        with torch.no_grad():
+            outputs = self.model.generate(
+                **inputs, max_new_tokens=200
+            )
+
+        return self.tokenizer.decode(
+            outputs[0], skip_special_tokens=True
+        )
