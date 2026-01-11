@@ -32,6 +32,8 @@ The system uses **two parallel retrievers** to improve recall and precision:
 
 Both results are **merged** and passed to a **Retrieval-Augmented Generation (RAG)** pipeline for answer generation.
 
+🔗 **Live Demo**: https://genai-hybrid-search-btxspfiafjvsqc23dhruqw.streamlit.app/
+
 ---
 
 ## 🏗️ Project Structure
