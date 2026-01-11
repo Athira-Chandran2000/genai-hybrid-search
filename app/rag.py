@@ -5,7 +5,7 @@ class HybridRAG:
     def __init__(self, hybrid_retriever):
         self.retriever = hybrid_retriever
         self.llm = pipeline(
-            "text-generation",
+            "text2text-generation",
             model="google/flan-t5-small",
             max_new_tokens=200
         )
