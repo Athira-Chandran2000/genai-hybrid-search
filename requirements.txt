@@ -5,3 +5,4 @@ chromadb==0.4.24
 sentence-transformers==2.2.2
 pypdf==3.17.4
 huggingface-hub==0.20.3
+rank-bm25
